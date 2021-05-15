@@ -72,17 +72,28 @@ export default  class DiaryPage extends Component {
       console.log("StartPage this.myRef.current.offsetTop;",offsetTop);
       
     };
+    close_click =()=>{
+      
+      common.scrollTo(this.props.id);
+
+      
+      this.setDemoModal(false);
+
+
+    }
 
     setDemoModal = (modal) => {
-      
-
+    
       this.setState({ demoModal:modal})
       
     };
     demoModalDownAndScroll = () => {
       
       this.setDemoModal(false);
-      common.scrollTo(this.props.nextid)
+      //common.scrollTo(this.props.item.uid)
+      console.log("this.props.map_ref",this.props.map_ref);
+      this.props.map_ref[this.props.nextid].current.setDemoModal(true);
+      
     };
 
     extend = () => {
@@ -126,13 +137,13 @@ export default  class DiaryPage extends Component {
        
       </div>
       <div className="modal-footer">
-        <Button color="default" type="button">
+        {/* <Button color="default" type="button">
           Nice Button
-        </Button>
+        </Button> */}
         <Button
           color="danger"
           type="button"
-          onClick={() => this.setDemoModal(false)}
+          onClick={this.close_click}
         >
           Close
         </Button>
@@ -161,10 +172,10 @@ export default  class DiaryPage extends Component {
 
             </h2>
           <div className="">
-          <h6 className="h2-seo">
+          <h4 className="h2-seo">
             
             <NewlineText text={this.state.text}/>
-            </h6> 
+            </h4> 
           </div>
           
 
@@ -172,7 +183,7 @@ export default  class DiaryPage extends Component {
           이전
           </Button>           
           <Button color="primary" onClick={() => this.setDemoModal(true)}>
-              자세히
+              일기보기
             </Button>
             {/* <Button color="primary" onClick={this.extend}>
               자세히2

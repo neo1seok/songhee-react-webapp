@@ -54,16 +54,86 @@ import {
   InputGroupText,
   InputGroup,
   Container,
+  UncontrolledCarousel,
   Row,
   Col,
+  Table
 } from "reactstrap";
 
 
-export class DiaryPageList extends Component {
+const Example = (props) => {
+  return (
+    <Table >
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>First Name</th>
+          <th>Last Name</th>
+          <th>Username</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>Mark</td>
+          <td>Otto</td>
+          <td>@mdo</td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>Jacob</td>
+          <td>Thornton</td>
+          <td>@fat</td>
+        </tr>
+        <tr>
+          <th scope="row">3</th>
+          <td>Larry</td>
+          <td>the Bird</td>
+          <td>@twitter</td>
+        </tr>
+      </tbody>
+    </Table>
+  );
+}
+
+
+
+const carouselItems = [
+  {
+    src:
+      "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1692f925835%20text%20%7B%20fill%3A%23555%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1692f925835%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23777%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22285.921875%22%20y%3D%22218.45%22%3EFirst%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E",
+    altText: "Slide 1",
+    caption: ""
+  },
+  {
+    src:
+      "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1692f925837%20text%20%7B%20fill%3A%23444%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1692f925837%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23666%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22247.3203125%22%20y%3D%22218.45%22%3ESecond%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E",
+    altText: "Slide 2",
+    caption: ""
+  },
+  {
+    src:
+      "data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%22800%22%20height%3D%22400%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20800%20400%22%20preserveAspectRatio%3D%22none%22%3E%3Cdefs%3E%3Cstyle%20type%3D%22text%2Fcss%22%3E%23holder_1692f925838%20text%20%7B%20fill%3A%23333%3Bfont-weight%3Anormal%3Bfont-family%3AHelvetica%2C%20monospace%3Bfont-size%3A40pt%20%7D%20%3C%2Fstyle%3E%3C%2Fdefs%3E%3Cg%20id%3D%22holder_1692f925838%22%3E%3Crect%20width%3D%22800%22%20height%3D%22400%22%20fill%3D%22%23555%22%3E%3C%2Frect%3E%3Cg%3E%3Ctext%20x%3D%22277%22%20y%3D%22218.45%22%3EThird%20slide%3C%2Ftext%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E",
+    altText: "Slide 3",
+    caption: ""
+  }
+];
+
+class Carousel extends React.Component {
+  render() {
+    return (
+      <>
+        <UncontrolledCarousel items={carouselItems} />
+      </>
+    );
+  }
+}
+
+
+export class DiaryTableList extends Component {
   constructor(props) {
     super(props);
     var previd ="";
-    
     var result = common.makePrevNextUid(diaries);
 
 
@@ -74,34 +144,49 @@ export class DiaryPageList extends Component {
     // this.next_map_info[previd] =  "";
     console.log("item.uid",this.prev_map_info);
     console.log("item.uid",this.next_map_info);
-    const map_ref ={};
-    this.dsfadsf = React.createRef();
-    diaries.map(
-      function(item){
-        var rObj = {};
-        map_ref[item.uid] = React.createRef()
-        return null;
-     }
-     );
-     this.map_ref = map_ref;
+    this.subdiaries = diaries.slice(0, 10)
 
-    console.log("map_ref",map_ref);
+    
   }
   
 render(){
 
 
   return (
-  <>  
-     {diaries.map(item => (   <DiaryPage ref = {this.map_ref[item.uid]} item={item} 
-     id={item.uid} 
-     previd={this.prev_map_info[item.uid]}
-     nextid={this.next_map_info[item.uid]}
-     map_ref={this.map_ref}
-
+    <Table >
+    <thead>
+        <tr>
+            
+            <th>date</th>
+            <th>title</th>
+            <th className="text-center">자세히</th>
+        </tr>
+    </thead>
+    <tbody>
+    {this.subdiaries.map(item => (   
+    // <DiaryPage item={item} id={item.uid} 
+    //  previd={this.prev_map_info[item.uid]}
+    //  nextid={this.next_map_info[item.uid]}
      
-     />   ))}
-   </>
+    //  />   
+    <tr>
+            
+            <td>{item.date_title}</td>
+            <td className= "text-left">{item.title}</td>
+            
+            <td className="text-right">
+                <Button className="btn-icon" color="success" size="sm">
+                    <i className="fa fa-edit"></i>
+                </Button>{` `}
+            
+            </td>
+        </tr>
+     
+     )  )}
+
+      
+    </tbody>
+</Table>
     )
   }
 }
@@ -145,7 +230,7 @@ const smaple_item = {
   "date_title": "2020년 02월 16일 일요일"
 }
 
-export default function Diary() {
+export default function DiaryTable() {
 
   React.useEffect(() => {
     document.body.classList.toggle("index-page");
@@ -161,11 +246,23 @@ export default function Diary() {
   return (
     <>
       <IndexNavbar />
-      <div className="wrapper">
+      <div className="page-header header-filter " >
+        <div className="content-center brand">
+          {/* <Carousel/> */}
+    <DiaryTableList/>
+    
 
-        <DiaryPageList/>
-        <Footer />
+
+        </div>
+
+       
+    
+    
       </div>
+
+
+        <Footer />
+     
     </>
   );
 }

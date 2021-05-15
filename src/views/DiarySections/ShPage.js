@@ -42,24 +42,16 @@ export default class ShPage extends Component {
   return (
     <div className="page-header header-filter" id = {this.props.id} >
 
-      <div className="squares square1">
-        test
-        </div> 
-      <div className="squares square2" />
-      <div className="squares square3" />
-      <div className="squares square4" />
-      <div className="squares square5" />
-      <div className="squares square6" />
-      <div className="squares square7" />
+     
       <Container>
         <div className="content-center brand">
-           <h3 className="d-none d-sm-block">
+           <h4 className="">
           
            <NewlineText text={this.props.text}/>
        
-          </h3>
+          </h4>
           <Button color="primary" type="button" onClick={() =>common.scrollTo(this.props.previd)} > 이전..</Button> 
-          <Button color="primary" type="button" onClick={() =>common.scrollTo(this.props.nextuid)} > 다음..</Button> 
+          <Button color="primary" type="button" onClick={() =>common.scrollTo(this.props.nextid)} > 다음..</Button> 
 
         </div>
         

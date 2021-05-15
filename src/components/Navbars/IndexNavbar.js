@@ -184,6 +184,12 @@ export default function IndexNavbar() {
                   <i className="tim-icons icon-paper" />
                   Diary
                 </DropdownItem>
+                
+                <DropdownItem href="/diary-table">
+                  <i className="tim-icons icon-paper" />
+                  Diary with table
+                </DropdownItem>
+
 
                 <DropdownItem tag={Link} to="/register-page">
                   <i className="tim-icons icon-bullet-list-67" />

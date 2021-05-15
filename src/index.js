@@ -27,6 +27,7 @@ import "assets/demo/demo.css";
 import Index from "views/Index.js";
 import Start from "views/Start.js";
 import Diary from "views/Diary.js";
+import DiaryTable from "views/DiaryTable.js";
 
 import LandingPage from "views/examples/LandingPage.js";
 import RegisterPage from "views/examples/RegisterPage.js";
@@ -38,6 +39,8 @@ ReactDOM.render(
       <Route path="/components" render={(props) => <Index {...props} />} />
       <Route path="/start" render={(props) => <Start {...props} />} />
       <Route path="/diary" render={(props) => <Diary {...props} />} />
+      <Route path="/diary-table" render={(props) => <DiaryTable {...props} />} />
+      
 
       
       <Route

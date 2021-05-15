@@ -27,6 +27,30 @@ export  function  scrollTo_(cur_name){
 
   };
 
+  export function makePrevNextUid(list_with_uid){
+    var previd ="";
+    var result ={}
+    var prev_map_info ={};
+    var next_map_info ={};
+
+    list_with_uid.map(item => {
+          //console.log("item.uid",item.uid,previd);
+          
+            prev_map_info[item.uid] = previd;
+          if(previd!=""){            
+            next_map_info[previd] =  item.uid;
+          }
+          
+          previd = item.uid;
+          
+
+        }
+
+    )
+    next_map_info[previd] =  "";
+    return {prev_map_info:prev_map_info,next_map_info:next_map_info}
+  }
+
   export  function scrollTo (id)  {
     var dom = document
       .getElementById(id);
