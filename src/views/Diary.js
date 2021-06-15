@@ -41,7 +41,8 @@ import DiaryPage from "views/DiarySections/DiaryPage.js";
 import ShPage from "views/DiarySections/ShPage.js";
 import NewlineText,* as common from "../js/common";
 
-import diaries from '../json/diary.json';
+//import diaries from '../json/diary.json';
+import token from '../json/token.json';
 
 import ReactDOM from "react-dom";
 import {
@@ -63,8 +64,21 @@ export class DiaryPageList extends Component {
   constructor(props) {
     super(props);
     var previd ="";
+    this.state = {diaries: []};
+
     
-    var result = common.makePrevNextUid(diaries);
+  }
+  
+  componentDidMount() {
+    fetch("/diaries",{
+        method : "GET",
+        headers : {
+             Authorization : 'Bearer '+token.access_token
+        }
+      })
+      .then(response => response.json())
+      .then(response => {
+        var result = common.makePrevNextUid(response);
 
 
     this.prev_map_info= result.prev_map_info;
@@ -76,7 +90,7 @@ export class DiaryPageList extends Component {
     console.log("item.uid",this.next_map_info);
     const map_ref ={};
     this.dsfadsf = React.createRef();
-    diaries.map(
+    response.map(
       function(item){
         var rObj = {};
         map_ref[item.uid] = React.createRef()
@@ -86,14 +100,22 @@ export class DiaryPageList extends Component {
      this.map_ref = map_ref;
 
     console.log("map_ref",map_ref);
+
+        this.setState( {diaries : response});
+        console.log("########TEST###########",response);
+
+      })
+
+
+    
   }
-  
+
 render(){
 
 
   return (
   <>  
-     {diaries.map(item => (   <DiaryPage ref = {this.map_ref[item.uid]} item={item} 
+     {this.state.diaries.map(item => (   <DiaryPage ref = {this.map_ref[item.uid]} item={item} 
      id={item.uid} 
      previd={this.prev_map_info[item.uid]}
      nextid={this.next_map_info[item.uid]}
@@ -123,18 +145,18 @@ const list = [
   },
 ];
  
-const ComplexList = () => (
-  <ul>
-    {list.map(item => (
-      <li key={item.id}>
-        <div>{item.id}</div>
-        <div>{item.firstname}</div>
-        <div>{item.lastname}</div>
-        <div>{item.year}</div>
-      </li>
-    ))}
-  </ul>
-);
+// const ComplexList = () => (
+//   <ul>
+//     {list.map(item => (
+//       <li key={item.id}>
+//         <div>{item.id}</div>
+//         <div>{item.firstname}</div>
+//         <div>{item.lastname}</div>
+//         <div>{item.year}</div>
+//       </li>
+//     ))}
+//   </ul>
+// );
 
 const smaple_item = {
   "uid": "id_001",

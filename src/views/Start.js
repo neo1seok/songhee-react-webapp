@@ -27,7 +27,8 @@ import StartPage from "views/DiarySections/StartPage.js";
 import ShPage from "views/DiarySections/ShPage.js";
 
 
-import letters from '../json/letter.json';
+//import letters from '../json/letter.json';
+import token from '../json/token.json';
 import NewlineText,* as common from "../js/common";
 import {
   Button,
@@ -60,31 +61,51 @@ export class StartPageList extends Component {
   constructor(props) {
     super(props);
     var previd ="";
-    var result = common.makePrevNextUid(letters);
-    var first_id = letters[0].uid;
-    var last_id = letters[letters.length-1].uid;
-    console.log("first_id",first_id,letters.length);
+    this.state = {letters: []};
+
+    
+  }
+  
+  componentDidMount() {
+    fetch("/letters",{
+        method : "GET",
+        headers : {
+             Authorization : 'Bearer '+token.access_token
+        }
+      })
+      .then(response => response.json())
+      .then(response => {
+        var result = common.makePrevNextUid(response);
+    var first_id = response[0].uid;
+    var last_id = response[response.length-1].uid;
+    console.log("first_id",first_id,response.length);
     console.log("last_id",last_id);
 
     this.prev_map_info= result.prev_map_info;
     this.next_map_info= result.next_map_info;
-    this.prev_map_info[first_id] =props.st_id;
-    this.next_map_info[last_id] = props.ed_id;
+    this.prev_map_info[first_id] =this.props.st_id;
+    this.next_map_info[last_id] = this.props.ed_id;
 
     
     // this.next_map_info[previd] =  "";
     console.log("item.uid",this.prev_map_info);
     console.log("item.uid",this.next_map_info);
 
+
+        this.setState( {letters : response});
+        console.log("########TEST###########",response);
+
+      })
+
+
     
   }
-  
 render(){
 
 
   return (
   <>  
-     {letters.map(item => (   <ShPage item={item} id={item.uid} 
+     {this.state.letters.map(item => (   <ShPage item={item} id={item.uid} 
      previd={this.prev_map_info[item.uid]}
      nextid={this.next_map_info[item.uid]}
 
@@ -127,7 +148,25 @@ class GotoDiary extends Component {
 }
 
 export default class Start extends Component {
-  
+  componentDidMount() {
+    fetch("api/lead")
+      .then(response => {
+        if (response.status > 400) {
+          return this.setState(() => {
+            return { placeholder: "Something went wrong!" };
+          });
+        }
+        return response.json();
+      })
+      .then(data => {
+        this.setState(() => {
+          return {
+            data,
+            loaded: true
+          };
+        });
+      });
+  }
 
   componentDidMount() {
     document.body.classList.toggle("index-page");

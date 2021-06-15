@@ -42,7 +42,7 @@ import ShPage from "views/DiarySections/ShPage.js";
 import NewlineText,* as common from "../js/common";
 
 import diaries from '../json/diary.json';
-
+import token from '../json/token.json';
 import ReactDOM from "react-dom";
 import {
   Button,
@@ -144,11 +144,28 @@ export class DiaryTableList extends Component {
     // this.next_map_info[previd] =  "";
     console.log("item.uid",this.prev_map_info);
     console.log("item.uid",this.next_map_info);
+    this.state = {diaries: []};
+    
     this.subdiaries = diaries.slice(0, 10)
 
     
   }
-  
+  componentDidMount() {
+    fetch("/diaries",{
+        method : "GET",
+        headers : {
+             Authorization : 'Bearer '+token.access_token
+        }
+ })
+.then(response => response.json())
+.then(response => {
+  this.setState( {diaries : response});
+   console.log("########TEST###########",response);
+})
+
+
+    document.body.classList.toggle("index-page");
+  }
 render(){
 
 
@@ -163,12 +180,8 @@ render(){
         </tr>
     </thead>
     <tbody>
-    {this.subdiaries.map(item => (   
-    // <DiaryPage item={item} id={item.uid} 
-    //  previd={this.prev_map_info[item.uid]}
-    //  nextid={this.next_map_info[item.uid]}
-     
-    //  />   
+    {this.state.diaries.map(item => (   
+   
     <tr>
             
             <td>{item.date_title}</td>
@@ -208,18 +221,18 @@ const list = [
   },
 ];
  
-const ComplexList = () => (
-  <ul>
-    {list.map(item => (
-      <li key={item.id}>
-        <div>{item.id}</div>
-        <div>{item.firstname}</div>
-        <div>{item.lastname}</div>
-        <div>{item.year}</div>
-      </li>
-    ))}
-  </ul>
-);
+// const ComplexList = () => (
+//   <ul>
+//     {list.map(item => (
+//       <li key={item.id}>
+//         <div>{item.id}</div>
+//         <div>{item.firstname}</div>
+//         <div>{item.lastname}</div>
+//         <div>{item.year}</div>
+//       </li>
+//     ))}
+//   </ul>
+// );
 
 const smaple_item = {
   "uid": "id_001",
@@ -230,19 +243,18 @@ const smaple_item = {
   "date_title": "2020년 02월 16일 일요일"
 }
 
-export default function DiaryTable() {
+export default class DiaryTable extends Component  {
 
-  React.useEffect(() => {
+  
+  componentDidMount() {
+   
     document.body.classList.toggle("index-page");
-    // Specify how to clean up after this effect:
-    return function cleanup() {
-      document.body.classList.toggle("index-page");
-    };
-  },[]);
-
+  }
+  componentDidUpdate() {
+    document.body.classList.toggle("index-page");
+  }
   
-  
-
+render(){
   return (
     <>
       <IndexNavbar />
@@ -265,4 +277,5 @@ export default function DiaryTable() {
      
     </>
   );
+}
 }
